@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+
+# Made by Kjetil S. Matheussen 2004 (k.s.matheussen@notam02.no)
+
+
+import sys,os,string
+
+
+if len(sys.argv)==1 or (len(sys.argv)>1 and (sys.argv[1]=="--help" or sys.argv[1]=="-h" or sys.argv[1]=="-help")):
+    print
+    print "Usage %s [-c jack-client-name] [-s alsa-seq-name] [--dontconnectjackports] vst-file-name" % sys.argv[0]
+    print
+    print 'Example: "%s JX220"' % sys.argv[0]
+    print
+    sys.exit(0);
+
+
+filename=sys.argv[-1]
+clientname=filename
+if string.lower(clientname[-4:])==".dll":
+    clientname=clientname[:-4]
+orgclientname=clientname
+seqname=""
+dontconnectjackports=""
+
+
+for i in range(len(sys.argv)):
+    arg=sys.argv[i]
+    if arg=="-c":
+        clientname=sys.argv[i+1]
+    if arg=="-s":
+        seqname=":"+sys.argv[i+1]
+    if arg=="--dontconnectjackports":
+        if seqname=="":
+            seqname=":"+orgclientname
+        dontconnectjackports=":--dontconnectjackports"
+    
+
+if os.system("jack_load "+clientname+" vst "+filename+seqname+dontconnectjackports)==0:
+    try:
+        sys.stdin.readline()
+    except:
+        pass
+    os.system("jack_unload "+clientname)
+

@@ -1,0 +1,28 @@
+
+
+vsti v0.0.3
+
+SHORT DESCRIPTION
+	Run a vsti plugin as a jack and alsa-seq client.
+
+REQUIRES
+	alsa(>=0.9), jack(>=0.94), python(>=2.0) and vstserver(>=3.0).
+	(might work with lover versions)
+
+INSTALL
+	1. Set the INSTALLPATH and JACKINSTALLPATH variables
+	   in the top of the Makefile.
+	2. make
+	3. sudo make install
+
+
+RUNNING
+	The name of the executable is "vsti". Run it with the plugin-name
+	as the last argument, and quit by pressing return.
+
+
+HISTORY
+	0.0.2 -> 0.0.3
+	-Fixed stupid vsti init bug. Don't use v0.0.2, as it probably won't
+	 work.
+
